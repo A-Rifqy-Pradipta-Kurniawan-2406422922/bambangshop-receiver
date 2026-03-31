@@ -9,7 +9,7 @@ use rocket::response::status::Custom;
 use reqwest::{Client, ClientBuilder};
 
 lazy_static! {
-    pub static ref REQWEST_CLIENT: Client = ClientBuilder::new().build().unwrap();
+    pub static ref REQUEST_CLIENT: Client = ClientBuilder::new().build().unwrap();
     pub static ref APP_CONFIG: AppConfig = AppConfig::generate();
 }
 
