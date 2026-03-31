@@ -68,16 +68,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Commit: `Implement receive_notification function in Notification service.`
+    -   [x] Commit: `Implement receive function in Notification controller.`
+    -   [x] Commit: `Implement list_messages function in Notification service.`
+    -   [x] Commit: `Implement list function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -94,3 +94,15 @@ This is the place for you to write reflections:
 Rust tidak mengizinkan mutasi bebas pada 'static' biasa karena Rust menjunjung memory safety di compile time. Mutasi global tanpa sinkronisasi menjadi berisiko saat ada concurrency. Di Java, mutasi 'static' bisa dilakukan tetapi thread safety menjadi tanggung jawab developer di runtime. Di Rust, mutasi state global harus melalui tipe yang thread-safe seperti `RwLock`, `Mutex`, atau concurrent lainnya, dan `lazy_static` membantu inisialisasi global yang aman tanpa `unsafe` manual.
 
 #### Reflection Subscriber-2
+>1. Have you explored things outside of the steps in the tutorial, for example: src/lib.rs? If not, explain why you did not do so. If yes, explain things that you have learned from those other parts of code.
+
+Setelah menganalisis `src/lib.rs`, saya melihat bahwa type alias 'Result' dan error response dibentuk agar bisa dipakai konsisten di controller dan service. Dari sana terlihat bahwa penyimpanan ke library membuat handler lebih singkat karena tidak perlu membuat format error lagi.
+
+>2. Since you have completed the tutorial by now and have tried to test your notification system by spawning multiple instances of Receiver, explain how Observer pattern eases you to plug in more subscribers. How about spawning more than one instance of Main app, will it still be easy enough to add to the system?
+
+Observer pattern memudahkan penambahan subscriber karena publisher tidak perlu tahu detail internal receiver karena publisher hanya menyimpan daftar subscriber dan memanggil endpoint yang sudah diketahui. Saat menambah instance receiver, kita cukup menjalankan instance baru dengan konfigurasi URL berbeda lalu melakukan subscribe. 
+Pada bagian lebih dari satu instance Main app, sistem justru kesusahan karena tiap publisher menyimpan state subscriber sendiri. Agar konsisten, receiver harus subscribe ke masing-masing publisher agar daftar subscriber dan publisher tersinkron.
+
+>3. Have you tried to make your own Tests, or enhance documentation on your Postman collection? If you have tried those features, tell us whether it is useful for your work (it can be your tutorial work or your Group Project).
+
+Saya mengeksplorasi penggunaan parameter query, pengelompokan request per fitur, dan pengulangan skenario yang sama untuk memastikan hasil tetap konsisten setelah perubahan kode.
